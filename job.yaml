@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test
+spec:
+  backoffLimit: 1
+  parallelism: 1
+  template:
+    metadata:
+      name: test
+    spec:
+        containers:
+        - name: test
+          image: gcr.io/grateful-197822/backlog
+          command: ["python"]
+          args: ["google_analytics_pipeline.py", "./report_configs/google_analytics/referrals.json", "2018-01-08"]
+          volumeMounts:
+          - name: creds
+            mountPath: "/usr/src/app/creds"
+            readOnly: true
+        volumes:
+        - name: creds
+          secret:
+            secretName: big-query-pipeline
+        restartPolicy: Never

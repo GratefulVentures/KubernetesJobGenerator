@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata: {name: ga-referrals-2018-07-20}
+spec:
+  backoffLimit: 1
+  parallelism: 1
+  template:
+    metadata: {name: ga-referrals-2018-07-20}
+    spec:
+      containers:
+      - args: [google_analytics_pipeline.py, ./report_configs/google_analytics/referrals.json,
+          2018-07-20]
+        command: [python]
+        image: gcr.io/grateful-197822/backlog
+        name: ga-referrals-2018-07-20
+        volumeMounts:
+        - {mountPath: /usr/src/app/creds, name: creds, readOnly: true}
+      restartPolicy: Never
+      volumes:
+      - name: creds
+        secret: {secretName: big-query-pipeline}

@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata: {name: ga-hourly-2018-04-08}
+spec:
+  backoffLimit: 1
+  parallelism: 1
+  template:
+    metadata: {name: ga-hourly-2018-04-08}
+    spec:
+      containers:
+      - args: [google_analytics_pipeline.py, ./report_configs/google_analytics/hourly.json,
+          2018-04-08]
+        command: [python]
+        image: gcr.io/grateful-197822/backlog
+        name: ga-hourly-2018-04-08
+        volumeMounts:
+        - {mountPath: /usr/src/app/creds, name: creds, readOnly: true}
+      restartPolicy: Never
+      volumes:
+      - name: creds
+        secret: {secretName: big-query-pipeline}
