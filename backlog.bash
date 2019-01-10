@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-for filename in ./ad-manager/bid-landscape/*.yaml
+for filename in ./ga/daily/*.yaml
 do
 kubectl create -f ${filename};
 sleep 2;

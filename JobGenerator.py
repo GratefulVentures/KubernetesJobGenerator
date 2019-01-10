@@ -16,7 +16,7 @@ def main(tool, report_type):
     with open('job.yaml', 'r') as jobs:
         job_yaml = yaml.load(jobs)
 
-    d1 = date(2018, 1, 1)  # start date
+    d1 = date(2017, 11, 1)  # start date
     d2 = date.today()  # end date
 
     delta = d2 - d1  # timedelta
